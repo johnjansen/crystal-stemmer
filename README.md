@@ -1,4 +1,8 @@
-# stemmer
+# crystal-stemmer
+-
+![](https://badge.fury.io/gh/crystal-stemmer.svg)
+![](https://travis-ci.org/johnjansen/crystal-stemmer.svg?branch=master)
+
 
 A very quick and dirty port of a Porter Stemmer
 essentially copied from https://github.com/raypereda/stemmify/blob/master/lib/stemmify.rb
