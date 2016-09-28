@@ -1,6 +1,7 @@
 # crystal-stemmer
 
-![GitHub version](https://badge.fury.io/gh/johnjansen%2Fcrystal-stemmer.svg)
+[![GitHub version](https://badge.fury.io/gh/johnjansen%2Fcrystal-stemmer.svg)](http://badge.fury.io/gh/johnjansen%2Fcrystal-stemmer)
+
 ![CI](https://travis-ci.org/johnjansen/crystal-stemmer.svg?branch=master)
 
 A very quick and dirty port of a Porter Stemmer
