@@ -22,8 +22,12 @@ dependencies:
 ```crystal
 require "stemmer"
 
-"Classified".stem # => Classifi
-"Classify".stem   # => Classifi
+"abate".stem # => abat
+"abated".stem # => abat
+"abatement".stem # => abat
+"abatements".stem # => abat
+"abates".stem # => abat
+
 ```
 
 ## Contributing
