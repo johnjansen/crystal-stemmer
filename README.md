@@ -9,18 +9,18 @@ This is a crystal shard for reducing words to their roots. For example, all the
 following words to are stemmed to "observ", which is not a real word
 in this case:
 ```
-	observance
-	observances
-	observancy
-	observant
-	observants
-	observation
-	observe
-	observed
-	observer
-	observers
-	observing
-	observingly
+observance
+observances
+observancy
+observant
+observants
+observation
+observe
+observed
+observer
+observers
+observing
+observingly
 ```
 
 The algorithm used here is based on the Porter stemmer.
@@ -30,10 +30,12 @@ http://tartarus.org/~martin/PorterStemmer/
 
 Martin Porter explains:
 
-	The Porter stemming algorithm (or ‘Porter stemmer’) is a process for removing
-	the commoner morphological and inflexional endings from words in English. Its
-	main use is as part of a term normalisation process that is usually done when
-	setting up Information Retrieval systems.
+```
+The Porter stemming algorithm (or ‘Porter stemmer’) is a process for removing
+the commoner morphological and inflexional endings from words in English. Its
+main use is as part of a term normalisation process that is usually done when
+setting up Information Retrieval systems.
+```
 
 ## Installation
 
@@ -56,8 +58,8 @@ map all the words to their roots using the stem method.
 Here's an example usage:
 
 ```
-  require 'stemmer'
-  print("observations".stem) # ==> "observ"
+require 'stemmer'
+print("observations".stem) # ==> "observ"
 ```
 
 ## Test Suite
@@ -67,7 +69,7 @@ website. It includes 23532 test words and their expected stem results.
 To run the test, just type
 
 ```
-  crystal spec
+crystal spec
 ```
 
 ## Contributing
