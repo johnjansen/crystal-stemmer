@@ -95,18 +95,17 @@ module Stemmer
     w = w.sub( /^y/, "Y" )
     
     # Step 1a
-    if p = w =~ /(ss|i)es$/
-      w = w[0..p-1] + $1
-    elsif p = w =~ /([^s])s$/ 
-      w = w[0..p-1] + $1
+    if w =~ /(ss|i)es$/
+      w = $~.pre_match + $1
+    elsif w =~ /([^s])s$/ 
+      w = $~.pre_match + $1
     end
 
     # Step 1b
-    p = w =~ /eed$/
-    if !p.nil?
-      w = w.chop if w[0..p-1] =~ MGR0 
-    elsif p = (w =~ /(ed|ing)$/)
-      stem = p == 0 ? "" : w[0..p-1]
+    if w =~ /eed$/
+      w = w.chop if $~.pre_match =~ MGR0 
+    elsif w =~ /(ed|ing)$/
+      stem = $~.pre_match
       if stem =~ VOWEL_IN_STEM 
         w = stem
       case w
@@ -117,16 +116,14 @@ module Stemmer
       end
     end
 
-    p = w =~ /y$/ 
-    if !p.nil?
-      stem = w[0..p-1]
+    if w =~ /y$/
+      stem = $~.pre_match
       w = stem + "i" if stem =~ VOWEL_IN_STEM 
     end
 
     # Step 2
-    p = w =~ SUFFIX_1_REGEXP
-    if !p.nil?
-      stem = p == 0 ? "" : w[0..p-1]
+    if w =~ SUFFIX_1_REGEXP
+      stem = $~.pre_match
       suffix = $1
       if stem =~ MGR0
         w = stem + STEP_2_LIST[suffix]
@@ -134,9 +131,8 @@ module Stemmer
     end
 
     # Step 3
-    p = w =~ /(icate|ative|alize|iciti|ical|ful|ness)$/
-    if !p.nil?
-      stem = w[0..p-1]
+    if w =~ /(icate|ative|alize|iciti|ical|ful|ness)$/
+      stem = $~.pre_match
       suffix = $1
       if stem =~ MGR0
         w = stem + STEP_3_LIST[suffix]
@@ -144,23 +140,21 @@ module Stemmer
     end
 
     # Step 4
-    p = w =~ SUFFIX_2_REGEXP
-    if !p.nil?
-      stem = w[0..p-1]
+    if w =~ SUFFIX_2_REGEXP
+      stem = $~.pre_match
       if stem =~ MGR1
         w = stem
       end
-    elsif w =~ /(.*)(s|t)(ion)$/
-      stem = $1 + $2
+    elsif w =~ /(s|t)(ion)$/
+      stem = $~.pre_match + $1
       if stem =~ MGR1
         w = stem
       end
     end
 
     #  Step 5
-    p = w =~ /e$/ 
-    if !p.nil?
-      stem = w[0..p-1]
+    if w =~ /e$/
+      stem = $~.pre_match
       if (stem =~ MGR1) ||
           (stem =~ MEQ1 && stem !~ /^#{CC}#{V}[^aeiouwxy]$/)
         w = stem
