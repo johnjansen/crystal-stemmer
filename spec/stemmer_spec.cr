@@ -16,6 +16,7 @@ describe Stemmer do
     output_words = read_as_array("spec/fixtures/output.txt")
 
     input_words.size().times do |i|
+      puts "Handling #{input_words[i]}"
       input_words[i].stem.should eq output_words[i]
     end  
   end

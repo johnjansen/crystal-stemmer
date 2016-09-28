@@ -1,3 +1,14 @@
+# Porter stemmer in Crystal.
+#
+# This is the Porter stemming algorithm, ported to Crystal from the
+# version coded up in Perl.  It's easy to follow against the rules
+# in the original paper in:
+#
+#   Porter, 1980, An algorithm for suffix stripping, Program, Vol. 14,
+#   no. 3, pp 130-137,
+#
+# See also http://www.tartarus.org/~martin/PorterStemmer
+
 require "./stemmer/*"
 
 module Stemmer
@@ -18,7 +29,7 @@ module Stemmer
   }
 
 
-  SUFFIX_1_REGEXP = /(.*)(
+  SUFFIX_1_REGEXP = /(
                     ational  |
                     tional   |
                     enci     |
@@ -42,7 +53,7 @@ module Stemmer
                     logi)$/x
 
 
-  SUFFIX_2_REGEXP = /(.*)(
+  SUFFIX_2_REGEXP = /(
                       al       |
                       ance     |
                       ence     |
@@ -84,17 +95,18 @@ module Stemmer
     w = w.sub( /^y/, "Y" )
     
     # Step 1a
-    if w =~ /(.*)(ss|i)es$/
-      w = $1 + $2
-    elsif w =~ /(.*)([^s])s$/ 
-      w = $1 + $2
+    if p = w =~ /(ss|i)es$/
+      w = w[0..p-1] + $1
+    elsif p = w =~ /([^s])s$/ 
+      w = w[0..p-1] + $1
     end
 
     # Step 1b
-    if w =~ /(.*)eed$/
-      w = w.chop if $1 =~ MGR0 
-    elsif w =~ /(.*)(ed|ing)$/
-      stem = $1
+    p = w =~ /eed$/
+    if !p.nil?
+      w = w.chop if w[0..p-1] =~ MGR0 
+    elsif p = (w =~ /(ed|ing)$/)
+      stem = p == 0 ? "" : w[0..p-1]
       if stem =~ VOWEL_IN_STEM 
         w = stem
       case w
@@ -105,32 +117,38 @@ module Stemmer
       end
     end
 
-    if w =~ /(.*)y$/ 
-      stem = $1
+    p = w =~ /y$/ 
+    if !p.nil?
+      stem = w[0..p-1]
       w = stem + "i" if stem =~ VOWEL_IN_STEM 
     end
 
     # Step 2
-    if w =~ SUFFIX_1_REGEXP
-      stem = $1
-      suffix = $2
+    p = w =~ SUFFIX_1_REGEXP
+    if !p.nil?
+      stem = p == 0 ? "" : w[0..p-1]
+      suffix = $1
+      puts stem =~ MGR0 
       if stem =~ MGR0
+        puts "suffix #{suffix} #{STEP_2_LIST[suffix]}"
         w = stem + STEP_2_LIST[suffix]
       end
     end
 
     # Step 3
-    if w =~ /(.*)(icate|ative|alize|iciti|ical|ful|ness)$/
-      stem = $1
-      suffix = $2
+    p = w =~ /(icate|ative|alize|iciti|ical|ful|ness)$/
+    if !p.nil?
+      stem = w[0..p-1]
+      suffix = $1
       if stem =~ MGR0
         w = stem + STEP_3_LIST[suffix]
       end
     end
 
     # Step 4
-    if w =~ SUFFIX_2_REGEXP
-      stem = $1
+    p = w =~ SUFFIX_2_REGEXP
+    if !p.nil?
+      stem = w[0..p-1]
       if stem =~ MGR1
         w = stem
       end
@@ -142,8 +160,9 @@ module Stemmer
     end
 
     #  Step 5
-    if w =~ /(.*)e$/ 
-      stem = $1
+    p = w =~ /e$/ 
+    if !p.nil?
+      stem = w[0..p-1]
       if (stem =~ MGR1) ||
           (stem =~ MEQ1 && stem !~ /^#{CC}#{V}[^aeiouwxy]$/)
         w = stem
