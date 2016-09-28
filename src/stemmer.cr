@@ -128,9 +128,7 @@ module Stemmer
     if !p.nil?
       stem = p == 0 ? "" : w[0..p-1]
       suffix = $1
-      puts stem =~ MGR0 
       if stem =~ MGR0
-        puts "suffix #{suffix} #{STEP_2_LIST[suffix]}"
         w = stem + STEP_2_LIST[suffix]
       end
     end
