@@ -1,8 +1,8 @@
 # Porter stemmer in Crystal.
 #
 # This is the Porter stemming algorithm, ported to Crystal from the
-# version coded up in Perl.  It's easy to follow against the rules
-# in the original paper in:
+# version coded up in Ruby, from the version coded up in Perl.  
+# It's easy to follow against the rules in the original paper in:
 #
 #   Porter, 1980, An algorithm for suffix stripping, Program, Vol. 14,
 #   no. 3, pp 130-137,
