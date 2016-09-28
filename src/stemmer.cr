@@ -161,3 +161,7 @@ module Stemmer
   end
 
 end
+
+class String
+  include Stemmer
+end
