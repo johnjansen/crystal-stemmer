@@ -1,4 +1,4 @@
-# crystal-stemmer
+# crystal-stemmer - moved to https://github.com/johnjansen/text
 
 [![GitHub version](https://badge.fury.io/gh/johnjansen%2Fcrystal-stemmer.svg)](http://badge.fury.io/gh/johnjansen%2Fcrystal-stemmer)
 [![CI](https://travis-ci.org/johnjansen/crystal-stemmer.svg?branch=master)](https://travis-ci.org/johnjansen/crystal-stemmer)
